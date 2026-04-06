@@ -1,0 +1,454 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 Zone Manager is an advanced zone manager for creating in-game zones.\
+\
+Permissions\
+This plugin uses the permission system. To assign a permission, use oxide.grant <user or group> <name or steam id> <permission>. To remove a permission, use oxide.revoke <user or group> <name or steam id> <permission>.\
+zonemanager.zone -- Allows access to chat/console commands\
+\
+zonemanager.ignoreflag.<flagtype> -- Allows players to bypass any flag set on a zone. Replace <flagtype with the flag you wish to ignore\
+\
+Make sure you do not blindly grant players any of the ignore flags!\
+\
+If you are unsure what the result of granting an ignoreflag will be, simply look at what the flag does and by granting the ignore flag permission that player will be able to bypass the flags affect\
+\
+Chat Commands\
+These are only accessible for players with auth level 2 or the permission zonemanager.zone\
+\
+/zone_add - Create a new zone on your location\
+\
+/zone_edit <zone ID> - Edit the zone with the specified ID\
+\
+/zone_list - List all zones with their corresponding zone ID\
+\
+/zone_remove <zone ID> - Remove the zone with the specified ID\
+\
+/zone_wipe - Deletes all zones\
+\
+/zone_player <opt:player ID or name> - Display information about the zones the specified player is in and what flags they currently have\
+\
+/zone_stats - Display the count of various entities in all zones\
+\
+/zone flags - Open the UI flag editor\
+\
+/zone <flag> <value> - Set's the specified field or flag\
+\
+Zone Flags\
+Zone flags are conditions you can apply to a zone. To set a zone flag you must first be editing the target zone. You can then apply flags to the zone by typing /zone <option> <value>.\
+\
+You can apply multiple flags in one line by continuing the pattern (ex. /zone eject true killsleepers true nobuild true)\
+\
+Alternatively, you can type /zone flags to open a GUI menu in which you can toggle flags easily.\
+\
+Available Flags\
+Flag name - Values - Description\
+\
+These are all the available flags. First is the name of the flag, followed by the value type it accepts.\
+\
+autolights - true/false - Toggles lights on and off automatically depending on the time (time's can be set in the config)\
+\
+eject - true/false - All players will be kicked from the zone when trying to enter it unless they are on the zone whitelist, or have the permission associated with that zone. (This flag will not affect admins)\
+\
+ejectsleepers - true/false - Players will be moved out of the zone when they go to sleep (This flag will not affect admins)\
+\
+infinitetrapammo - true/false - Flame turrets, gun traps and auto-turrets won't consume fuel\
+\
+kill - true/false - Players will be killed when they enter the zone\
+\
+killsleepers - true/false - Players will be killed when they go to sleep (This flag will not affect admins)\
+\
+lootself - true/false - Players will be able to loot their own body/bag. This flag only applies when the flag NoPlayerLoot is active on a zone\
+\
+noapctargeting - true/false - APCs will not target players in the zone\
+\
+nobleed - true/false - Prevent players from bleeding\
+\
+noboxloot - true/false - Prevent players from looting boxes\
+\
+nobuild - true/false - Prevent players from building (This flag will not affect admins)\
+\
+nochat - true/false - Prevent player from using chat (This flag will not affect admins)\
+\
+nocollect - true/false - Prevent players from picking up collectables\
+\
+nocorpse - true/false - Remove player corpses when they spawn\
+\
+nocraft - true/false - Disable crafting in the zone\
+\
+nocup - true/false - Prevent players from placing a Tool Cupboard\
+\
+nodecay - true/false - Stop decay-able entities from taking decay damage\
+\
+nodeploy - true/false - Prevent players from deploying items (This flag will not affect admins)\
+\
+nodooraccess - true/false - Prevent players from opening doors\
+\
+nodrop - true/false - Removes dropped items\
+\
+nodrown - true/false - Prevent players from drowning\
+\
+noentitypickup - true/false - Prevent players from picking up entities such as doors, locks etc\
+\
+nofalldamage - true/false - Prevent players from taking fall damage\
+\
+nogather - true/false - Prevent players from gathering resources\
+\
+nohelitargeting - true/false - Stops helicopters from targeting players and sends them to a new location\
+\
+nokits - true/false - Prevent players from claiming kits (Kits plugin)\
+\
+nolootspawns - true/false - Prevent loot from spawning in the zone\
+\
+nonpcspawns - true/false - Prevent animals from spawning in the zone\
+\
+nonpctargeting - true/false - NPC players wont target players in the zone\
+\
+nooventoggle - true/false - Prevent players from toggling on/off ovens/lights/fires etc\
+\
+nopickup - true/false - Prevent players from picking up dropped items\
+\
+noplayerloot - true/false - Prevent players from looting other players\
+\
+nopve - true/false - Animals will be invincible to player attacks\
+\
+noremove - true/false - Prevent players using the remove tool (RemoveTool plugin)\
+\
+nosignupdates - true/false - Prevent players from updating signs\
+\
+noshop - true/false - Prevent players from using a shop (GUIShop/ServerRewards)\
+\
+nostability - true/false - Disable structure stability\
+\
+nostash - true/false - Prevent players from hiding a stash\
+\
+nosuicide - true/false - Prevent players from using the suicide command\
+\
+notp - true/false - Prevent players from using teleportation (Teleportation plugin)\
+\
+notrade - true/false - Prevent players from trading (Trade plugin)\
+\
+noturrettargeting - true/false - Stops turrets from targeting players (autoturret/flameturret/guntrap)\
+\
+noupgrade - true/false - Buildings can not be upgraded (This flag will not affect admins)\
+\
+novending - true/false - Prevent players from using vending machines\
+\
+novoice - true/false - Prevent players from using voice chat (This flag will not affect admins)\
+\
+nowounded - true/false - Skip the wounded state when a player dies\
+\
+keepvehiclesin - true/false - Vehicles inside the zone will be prevented from leaving\
+\
+keepvehiclesout - true/false - Vehicles will be prevented from entering the zone\
+\
+npcfreeze - true/false - Stop animals from moving around\
+\
+pvegod - true/false - Players will have PVE god mode\
+\
+pvpgod - true/false - Players will have PVP god mode\
+\
+sleepgod - true/false - Sleeping players will have god mode\
+\
+undestr - true/false - Buildings will not take damage\
+\
+Zone Options\
+There are also zone options that can be set/adjusted in the same way you would set a flag.\
+\
+Option - Values - Description\
+\
+name - "Zone Name" - Set the zone name\
+\
+id - "ID number" - Set the zone ID\
+\
+location - "here" or "x y z" - By using the value "here" the zone location will move to your position, otherwise set the position manually by typing the co-ordinates (x y z)\
+\
+radius - Number amount - Set the radius of the zone (if using a sphere shaped zone)\
+\
+size - "width height length" - Set the size of the zone (for use when creating rectangle zones. Be sure to type the width, height and length as numbers representing the size you wish the zone to be\
+\
+rotation - "y rotation" or no value - Rotate a rectangle zone to the Y value specified, or if no value is given it will be the direction you are facing\
+\
+radiation - Number amount - Add radiation to this zone\
+\
+safezone - true/false - Set's the zone as a safe zone the same as the compound, where weapon can't be drawn and player to player damage can not be dealt\
+\
+enter_message - "Any message in quotation marks" - Set a message to display to players when they enter the zone\
+\
+leave_message - "Any message in quotation marks" - Set a message to display to players when they leave the zone\
+\
+ejectspawns - "Spawnfile name" - Designate a spawnfile to eject players to as an alternative to teleporting them outside of the zone\
+\
+permission - "Permission name" - Assign a permission to this zone to prevent players without the permission entering it\
+\
+enabled - true/false - Enable or disable this zone\
+\
+parentid - "Zone ID" - Set a parent zone\
+\
+Example zone creation for an admin house:\
+\
+/zone_add\
+/zone nobuild true nodeploy true name "Admin House" undestr true\
+Here you can see we have created a new zone, named it "Admin House" and set the nobuild, nodeploy and undest flags to true. This will stop players from building, deploying items and damaging buildings in the zone.\
+\
+Parent/Child Zones\
+By default, smaller zones inside other zones inherit the flags from the larger zone, aswell as the flags assigned to the smaller zone.\
+\
+To work around this you can assign a parent zone ID to the smaller zone by using the command "/zone parentid <zoneid>".\
+\
+The plugin will still register the player as being inside both zones, but all the flags from the parent zone (the larger outer zone) will be disabled for that player when they enter the child zone (the smaller zone inside the outer zone).\
+\
+If you are using this feature and still want certain flags from the parent zone applied to the player, zimply apply those flags to the child zone also.\
+\
+Temporary Zones\
+Temporary zones can be created by other plugins. These zones are not saved, and are removed either by the plugin that created them, or automatically if ZoneManager or the plugin that created them is unloaded.\
+\
+See "Temporary Zone Management" below for the available API methods to create temporary zones\
+\
+Configuration\
+The settings and options can be configured in the ZoneManager file under the config directory. The use of an editor and validator is recommended to avoid formatting issues and syntax errors.\
+\{\
+  "Autolight Options": \{\
+    "Time to turn lights on": 18.0,\
+    "Time to turn lights off": 6.0,\
+    "Lights require fuel to activate automatically": true\
+  \},\
+  "Notification Options": \{\
+    "Display notifications via PopupNotifications": false,\
+    "Chat prefix": "[Zone Manager] :",\
+    "Chat color (hex)": "#d85540"\
+  \},\
+  "NPC players can deal player damage in zones with PvpGod flag": false,\
+  "Allow decay damage in zones with Undestr flag": false,\
+  "Version": \{\
+    "Major": 3,\
+    "Minor": 0,\
+    "Patch": 0\
+  \}\
+\}\
+Developer API\
+Zone Management\
+// Create a regular zone\
+// "zoneId" is a unique identifier for the zone you are creating\
+// "args" are the zone fields set to the zone. This is the same as the Zone Options listed above, where you provide the option and value pairs. (ex. args[0] = "name", args[1] = "My Zone Name", args[2] = "eject", args[3] = "true")\
+// "position" is the world position of the zone you are creating\
+// Returns true if the zone was created/updated, else returns false\
+bool CreateOrUpdateZone(string zoneId, string[] args, Vector3 position = default(Vector3))\
+\
+\
+// Bulk create/update zones. Same as above, but does multiple at once.\
+// Provide a List<(string, string[], Vector3)> with the zone parameters (zone ID, args, position).\
+// Optionally provide a List<bool> to track the results from each zone\
+void CreateOrUpdateZones(List<(string, string[], Vector3)> zones, List<bool> results = null)\
+\
+\
+// Erase a zone by ZoneID or name.\
+// Returns true if the zone was deleted or false if the zone doesn't exist\
+bool EraseZone(string zoneId)\
+\
+\
+// Bulk erase zones by ID or name. Same as above, but does multiple at once.\
+// Optionally provide a List<bool> to track the results from each zone\
+void EraseZones(List<string> zoneIds, List<bool> results = null)\
+Temporary Zone Management\
+// Creates a temporary zone that is tied to the plugin that created it.\
+// These zones are not saved and are automatically destroyed when either ZoneManager or the plugin that created them are unloaded\
+// The parameters are the same as "CreateOrUpdateZone" shown above, but with an additional Plugin parameter\
+bool CreateOrUpdateTemporaryZone(Plugin owner, string zoneId, string[] args, Vector3 position = default(Vector3))\
+\
+\
+void CreateOrUpdateTemporaryZones(Plugin owner, List<(string, string[], Vector3)> zones, List<bool> results = null)\
+\
+\
+bool EraseTemporaryZone(Plugin owner, string zoneId)\
+\
+\
+void EraseTemporaryZones(Plugin owner, List<string> zoneIds, List<bool> results = null)\
+Zone Entities\
+// Get the list of players in the specified zone\
+List<BasePlayer> GetPlayersInZone(string zoneId)\
+\
+\
+// Get the players in the specified zone, provide your own list that will be populated by the function\
+void GetPlayersInZoneNoAlloc(string zoneID, List<BasePlayer> list)\
+\
+\
+// Get the list of entities in the specified zone\
+List<BaseEntity> GetEntitiesInZone(string zoneId)\
+\
+\
+// Get the entities in the specified zone, provide your own list that will be populated by the function\
+void GetEntitiesInZoneNoAlloc(string zoneId, List<BaseEntity> list)\
+\
+\
+// Returns true if the player is in the specified zone, else returns false\
+bool IsPlayerInZone(string zoneId, BasePlayer player)\
+\
+\
+// Returns true if the entity is in the specified zone, else returns false\
+bool IsEntityInZone(string zoneId, BaseEntity entity)\
+\
+\
+// Will stop the player from leaving the specified zone and keep them from leaving.\
+// If the player is not already in the zone they will automatically be teleported to the zone.\
+// Make sure that if you have the zone flag "eject" set to true that you add the player to the zone whitelist before forcing them inside!\
+// Returns true if all went accordingly or false if the zone does not exist\
+bool AddPlayerToZoneKeepinlist(string zoneId, BasePlayer player)\
+\
+\
+// Will allow previously "jailed" players to leave the zone.\
+// This will not teleport the player out of the zone.\
+// Returns true if all went accordingly or false if the zone does not exist\
+bool RemovePlayerFromZoneKeepinlist(string zoneId, BasePlayer player)\
+Zone Options\
+// Set the zone with the specified ID as enabled or disabled\
+void SetZoneStatus(string zoneId, bool active)\
+\
+\
+// Returns the radius (float), or null if the zone does not exist.\
+object GetZoneRadius(string zoneId)\
+\
+\
+// Returns the size (Vector3), or null if the zone does not exist.\
+object GetZoneSize(string zoneId)\
+\
+\
+// Returns the zone name (string), or null if the zone does not exist.\
+object GetZoneName(string zoneId)\
+\
+\
+ // Returns the zone ID (string) if it exists, or null if the zone does not exist.\
+object CheckZoneID(string zoneId)\
+\
+\
+ // Returns a string[] of zone ID's, or null if no zones exist.\
+object GetZoneIDs()\
+\
+\
+// Populates the provided List<string> with zone IDs\
+void GetZoneIDsNoAlloc(List<string> list)\
+\
+\
+// Returns the world space position of the specified zone, or Vector3.zero if the zone does not exist.\
+Vector3 GetZoneLocation(string zoneId)\
+\
+\
+// Returns the zone with the specified ID's zone definition.\
+// This includes all the fields and data that make the zone what it is\
+Dictionary<string, string> ZoneFieldList(string zoneId)\
+Zone Flags\
+// Returns true if the zone with the specified ID has the specified flag, else returns false\
+bool HasFlag(string zoneId, string flagString)\
+\
+\
+// Returns true if the position is in a zone with the specified flag\
+bool PositionHasFlag(Vector3 position, string flagName)\
+\
+\
+// Adds the specified flag to the zone with the specified ID\
+void AddFlag(string zoneId, string flagString)\
+\
+\
+// Removes the specified flag from the zone with specified ID\
+void RemoveFlag(string zoneId, string flagString)\
+\
+\
+// Disabled flags are temporary. They do not persist through reloads\
+// Returns true if the zone with the specified ID has the specified flag disabled, else returns false\
+bool HasDisabledFlag(string zoneId, string flagString)\
+\
+\
+// Adds the specified disabled flag to the zone with the specified ID\
+void AddDisabledFlag(string zoneId, string flagString)\
+\
+\
+// Removes the specified disabled flag from the zone with specified ID\
+void RemoveDisabledFlag(string zoneId, string flagString)\
+\
+\
+ // Returns true if the entity is in any zone with the specified flag, else returns false\
+bool EntityHasFlag(BaseEntity entity, string flagString)\
+\
+\
+// Returns true if the player is in any zone with the specified flag, else returns false\
+bool PlayerHasFlag(BasePlayer player, string flagString)\
+Other API Methods\
+// Returns a string[] of IDs for zones the specified player is currently in, or null if none found\
+string[] GetPlayerZoneIDs(BasePlayer player)\
+\
+\
+// Populates the provided List<string> with IDs for zones the specified player is currently in\
+void GetPlayerZoneIDsNoAlloc(BasePlayer player, List<string> list)\
+\
+\
+// Returns a string[] of IDs for zones the specified entity is currently in, or null if none found\
+string[] GetEntityZoneIDs(BaseEntity entity)\
+\
+\
+// Populates the provided List<string> with IDs for zones the specified entity is currently in\
+void GetEntityZoneIDsNoAlloc(BaseEntity entity, List<string> list)\
+\
+\
+// Returns true if the position is in any zone\
+bool IsPositionInAnyZone(Vector3 position)\
+\
+\
+// Populates the results list with all the zones that contain the specified position\
+void GetZonesAtPosition(Vector3 position, List<string> results)\
+Hooks\
+// Called when a player enters a zone\
+void OnEnterZone(string zoneId, BasePlayer player)\
+\{\
+\}\
+\
+\
+// Called when a player leaves a zone\
+void OnExitZone(string zoneId, BasePlayer player)\
+\{\
+\}\
+\
+\
+// Called when a entity enters a zone\
+void OnEntityEnterZone(string zoneId, BaseEntity entity)\
+\{\
+\}\
+\
+\
+// Called when a entity leaves a zone\
+void OnEntityExitZone(string zoneId, BaseEntity entity)\
+\{\
+\}\
+\
+\
+// Called when a new zone has been created\
+void OnZoneCreated(string zoneId)\
+\{\
+\}\
+\
+\
+// Called when a existing zone has been modified\
+void OnZoneUpdated(string zoneId)\
+\{\
+\}\
+\
+\
+// Called when a zone has been deleted\
+void OnZoneErased(string zoneId)\
+\{\
+\}\
+\
+\
+// Called when a zone object is being created\
+void OnZoneInitialize(string zoneId)\
+\{\
+\}\
+\
+\
+// Called when a zone object has been destroyed\
+void OnZoneDestroyed(string zoneId)\
+\{\
+\}}
