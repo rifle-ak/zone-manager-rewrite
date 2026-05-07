@@ -7,6 +7,7 @@ using Oxide.Core.Configuration;
 using Oxide.Core.Plugins;
 using Oxide.Game.Rust.Cui;
 using Rust;
+using Rust.Ai.Gen2;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -564,7 +565,7 @@ namespace Oxide.Plugins
                 if (EntityOrPositionHasFlag(baseEntity, ZoneFlags.NoLootSpawns))
                     baseEntity.Invoke(() => { if (baseEntity && !baseEntity.IsDestroyed) baseEntity.Kill(BaseNetworkable.DestroyMode.None); }, 0.1f);
             }
-            else if (baseEntity is BaseNpc or NPCPlayer)
+            else if (baseEntity is BaseNpc or BaseNPC2 or NPCPlayer)
             {
                 if (EntityOrPositionHasFlag(baseEntity, ZoneFlags.NoNPCSpawns))
                     baseEntity.Invoke(() => { if (baseEntity && !baseEntity.IsDestroyed) baseEntity.Kill(BaseNetworkable.DestroyMode.None); }, 0.1f);
@@ -1705,6 +1706,12 @@ namespace Oxide.Plugins
                         npc.CancelInvoke(npc.TickAi);
                         return;
                     }
+                    if (baseEntity is BaseNPC2 npc2)
+                    {
+                        FSMComponent fsmComponent = npc2.GetComponent<FSMComponent>();
+                        if (fsmComponent)
+                            fsmComponent.SetFsmActive(false);
+                    }
                 }
 
                 if (baseEntity is SmartSwitch or ElectricSwitch or RFReceiver)
@@ -1761,6 +1768,12 @@ namespace Oxide.Plugins
                     {
                         npc.InvokeRandomized(npc.TickAi, 0.1f, 0.1f, 0.00500000035f);
                         return;
+                    }
+                    if (baseEntity is BaseNPC2 npc2)
+                    {
+                        FSMComponent fsmComponent = npc2.GetComponent<FSMComponent>();
+                        if (fsmComponent)
+                            fsmComponent.SetFsmActive(true);
                     }
                 }
 
