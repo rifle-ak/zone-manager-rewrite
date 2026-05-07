@@ -21,7 +21,7 @@ using Debug = UnityEngine.Debug;
 
 namespace Oxide.Plugins
 {
-    [Info("Zone Controller", "Rifle_AK", "1.0.0")]
+    [Info("Zone Controller", "Rifle_AK", "3.1.11")]
     [Description("A high-performance zone management system for creating in-game zones")]
     public class ZoneManager : RustPlugin
     {
