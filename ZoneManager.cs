@@ -2133,7 +2133,7 @@ namespace Oxide.Plugins
             { radiation_level.value = 0f; radiation_level.max = 0f; radiation_poison.value = 0f; radiation_poison.max = 0f; }
             else { radiation_level.max = 100f; radiation_poison.max = 500f; }
 
-            player.metabolism.SendChangesToClient();
+            player.metabolism.SendChanges();
         }
 
         private void OnEntityEnterZone(BaseEntity baseEntity, Zone zone)
