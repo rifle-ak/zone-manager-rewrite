@@ -55,6 +55,9 @@ namespace Oxide.Plugins
         private const string PERMISSION_IGNORE_FLAG = "zonemanager.ignoreflag.";
 
         private const int TARGET_LAYERS = ~(1 << 10 | 1 << 18 | 1 << 28 | 1 << 29);
+
+        // Floor applied to calories/hydration by NoStarvation/NoThirst.
+        private const float METABOLISM_FLOOR = 50f;
         #endregion
 
         #region Oxide Hooks
@@ -2132,14 +2135,20 @@ namespace Oxide.Plugins
             { poison.value = 0f; poison.max = 0f; }
             else poison.max = 100f;
 
+            // Use a fixed floor rather than pinning min to the player's current
+            // value. Pinning collapsed the attribute's range for anyone entering
+            // well-fed/hydrated (min == value == max), which normalizes to 0/0 and
+            // made the client read them as starving/dehydrated - blocking sprint.
+            // A constant floor still prevents starvation/dehydration, because the
+            // metabolism clamps value to >= min between zone updates.
             MetabolismAttribute calories = player.metabolism.calories;
             if (HasPlayerFlag(player, ZoneFlags.NoStarvation))
-            { calories.value = Mathf.Max(calories.value, 50f); calories.min = calories.value; }
+            { calories.min = METABOLISM_FLOOR; calories.value = Mathf.Max(calories.value, METABOLISM_FLOOR); }
             else calories.min = 0f;
 
             MetabolismAttribute hydration = player.metabolism.hydration;
             if (HasPlayerFlag(player, ZoneFlags.NoThirst))
-            { hydration.value = Mathf.Max(hydration.value, 50f); hydration.min = hydration.value; }
+            { hydration.min = METABOLISM_FLOOR; hydration.value = Mathf.Max(hydration.value, METABOLISM_FLOOR); }
             else hydration.min = 0f;
 
             MetabolismAttribute radiation_level = player.metabolism.radiation_level;
