@@ -20,7 +20,7 @@ using Debug = UnityEngine.Debug;
 
 namespace Oxide.Plugins
 {
-    [Info("Zone Manager", "k1lly0u", "3.1.13")]
+    [Info("Zone Manager", "k1lly0u", "3.1.12")]
     [Description("An advanced management system for creating in-game zones")]
     public class ZoneManager : RustPlugin
     {
@@ -247,13 +247,13 @@ namespace Oxide.Plugins
                 if (!HasPlayerFlag(player, ZoneFlags.NoBuild)) 
                     return;
                 
-                BaseCombatEntity.EntityBuildCost list = block.BuildCost();
+                List<ItemAmount> list = block.BuildCost();
 
                 block.Invoke(() =>
                 {
-                    for (int i = 0; i < list.Items?.Count; i++)
+                    for (int i = 0; i < list?.Count; i++)
                     {
-                        ItemAmount itemAmount = list.Items[i];
+                        ItemAmount itemAmount = list[i];
                         player.GiveItem(ItemManager.Create(itemAmount.itemDef, Mathf.Clamp(Mathf.RoundToInt(itemAmount.amount), 1, int.MaxValue)));
                     }
 
@@ -1620,8 +1620,7 @@ namespace Oxide.Plugins
                         if (!baseOven.IsOn())
                         {
                             if ((requiresFuel && baseOven.FindBurnable() != null) || !requiresFuel)
-                                using (var flags = baseOven.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                                    flags.Set(BaseEntity.Flags.On, true);
+                                baseOven.SetFlag(BaseEntity.Flags.On, true);
                         }
                     }
                     else
@@ -1639,14 +1638,12 @@ namespace Oxide.Plugins
                     if (active)
                     {
                         if (!searchLight.IsOn())
-                            using (var flags = searchLight.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                                flags.Set(BaseEntity.Flags.On, true);
+                            searchLight.SetFlag(BaseEntity.Flags.On, true);
                     }
                     else
                     {
                         if (searchLight.IsOn())
-                            using (var flags = searchLight.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                                flags.Set(BaseEntity.Flags.On, false);
+                            searchLight.SetFlag(BaseEntity.Flags.On, false);
                     }
 
                     return true;
@@ -1801,8 +1798,7 @@ namespace Oxide.Plugins
 
                     if (HasFlag(ZoneFlags.PoweredSwitches))
                     {
-                        using (var flags = ((IOEntity)baseEntity).StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                            flags.Set(BaseEntity.Flags.Reserved8, true);
+                        ((IOEntity)baseEntity).SetFlag(BaseEntity.Flags.Reserved8, true);
                         ((IOEntity)baseEntity).currentEnergy = int.MaxValue;
                     }
                 }
@@ -1878,8 +1874,7 @@ namespace Oxide.Plugins
 
                     if (HasFlag(ZoneFlags.PoweredSwitches))
                     {
-                        using (var flags = ioEntity.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                            flags.Set(BaseEntity.Flags.Reserved8, false);
+                        ioEntity.SetFlag(BaseEntity.Flags.Reserved8, false);
                         ioEntity.currentEnergy = 0;
 
                         for (int i = 0; i < ioEntity.inputs.Length; i++)
@@ -1911,8 +1906,7 @@ namespace Oxide.Plugins
                     if (!ioEntity || ioEntity.IsDestroyed) 
                         continue;
                     
-                    using (var flags = ioEntity.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
-                        flags.Set(BaseEntity.Flags.Reserved8, true);
+                    ioEntity.SetFlag(BaseEntity.Flags.Reserved8, true);
                     ioEntity.currentEnergy = int.MaxValue;
                 }
             }
