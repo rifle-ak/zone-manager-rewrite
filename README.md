@@ -1,7 +1,7 @@
 # Zone Controller
 
 **Author:** Rifle_AK
-**Version:** 1.0.0
+**Version:** 3.1.13
 **Game:** Rust (Oxide/uMod)
 
 A high-performance zone management plugin for Rust. Complete rewrite of ZoneManager with full backward compatibility, extensive bug fixes, and significant performance improvements.

@@ -20,7 +20,7 @@ using Debug = UnityEngine.Debug;
 
 namespace Oxide.Plugins
 {
-    [Info("Zone Manager", "k1lly0u", "3.1.11")]
+    [Info("Zone Manager", "k1lly0u", "3.1.13")]
     [Description("An advanced management system for creating in-game zones")]
     public class ZoneManager : RustPlugin
     {
@@ -247,13 +247,13 @@ namespace Oxide.Plugins
                 if (!HasPlayerFlag(player, ZoneFlags.NoBuild)) 
                     return;
                 
-                List<ItemAmount> list = block.BuildCost();
+                BaseCombatEntity.EntityBuildCost list = block.BuildCost();
 
                 block.Invoke(() =>
                 {
-                    for (int i = 0; i < list?.Count; i++)
+                    for (int i = 0; i < list.Items?.Count; i++)
                     {
-                        ItemAmount itemAmount = list[i];
+                        ItemAmount itemAmount = list.Items[i];
                         player.GiveItem(ItemManager.Create(itemAmount.itemDef, Mathf.Clamp(Mathf.RoundToInt(itemAmount.amount), 1, int.MaxValue)));
                     }
 
@@ -1101,7 +1101,8 @@ namespace Oxide.Plugins
             }
 
             player.MovePosition(position);
-            player.ClientRPCPlayer(null, player, "ForcePositionTo", player.transform.position);
+            //player.ClientRPCPlayer(null, player, "ForcePositionTo", player.transform.position);
+            player.ClientRPC(RpcTarget.Player("ForcePositionTo", player), player.transform.position);
             player.SendNetworkUpdateImmediate();
 
             SendMessage(player, Message("eject", player.UserIDString));
@@ -1121,7 +1122,8 @@ namespace Oxide.Plugins
             position.y = TerrainMeta.HeightMap.GetHeight(position);
 
             player.MovePosition(position);
-            player.ClientRPCPlayer(null, player, "ForcePositionTo", player.transform.position);
+            //player.ClientRPCPlayer(null, player, "ForcePositionTo", player.transform.position);
+            player.ClientRPC(RpcTarget.Player("ForcePositionTo", player), player.transform.position);
             player.SendNetworkUpdateImmediate();
 
             SendMessage(player, Message("attract", player.UserIDString));
@@ -1618,7 +1620,8 @@ namespace Oxide.Plugins
                         if (!baseOven.IsOn())
                         {
                             if ((requiresFuel && baseOven.FindBurnable() != null) || !requiresFuel)
-                                baseOven.SetFlag(BaseEntity.Flags.On, true);
+                                using (var flags = baseOven.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                                    flags.Set(BaseEntity.Flags.On, true);
                         }
                     }
                     else
@@ -1636,12 +1639,14 @@ namespace Oxide.Plugins
                     if (active)
                     {
                         if (!searchLight.IsOn())
-                            searchLight.SetFlag(BaseEntity.Flags.On, true);
+                            using (var flags = searchLight.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                                flags.Set(BaseEntity.Flags.On, true);
                     }
                     else
                     {
                         if (searchLight.IsOn())
-                            searchLight.SetFlag(BaseEntity.Flags.On, false);
+                            using (var flags = searchLight.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                                flags.Set(BaseEntity.Flags.On, false);
                     }
 
                     return true;
@@ -1796,7 +1801,8 @@ namespace Oxide.Plugins
 
                     if (HasFlag(ZoneFlags.PoweredSwitches))
                     {
-                        ((IOEntity)baseEntity).SetFlag(BaseEntity.Flags.Reserved8, true);
+                        using (var flags = ((IOEntity)baseEntity).StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                            flags.Set(BaseEntity.Flags.Reserved8, true);
                         ((IOEntity)baseEntity).currentEnergy = int.MaxValue;
                     }
                 }
@@ -1872,7 +1878,8 @@ namespace Oxide.Plugins
 
                     if (HasFlag(ZoneFlags.PoweredSwitches))
                     {
-                        ioEntity.SetFlag(BaseEntity.Flags.Reserved8, false);
+                        using (var flags = ioEntity.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                            flags.Set(BaseEntity.Flags.Reserved8, false);
                         ioEntity.currentEnergy = 0;
 
                         for (int i = 0; i < ioEntity.inputs.Length; i++)
@@ -1904,7 +1911,8 @@ namespace Oxide.Plugins
                     if (!ioEntity || ioEntity.IsDestroyed) 
                         continue;
                     
-                    ioEntity.SetFlag(BaseEntity.Flags.Reserved8, true);
+                    using (var flags = ioEntity.StartSetFlags(BaseEntity.FlagsUpdateMode.SendNetworkUpdate))
+                        flags.Set(BaseEntity.Flags.Reserved8, true);
                     ioEntity.currentEnergy = int.MaxValue;
                 }
             }
